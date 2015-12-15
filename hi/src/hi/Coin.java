@@ -17,7 +17,7 @@ public class Coin extends GenericObject {
 
 	/**
 	 * Constructor for coin Creates predetermined size and gives each coin an
-	 * image
+	 * imageh
 	 * 
 	 */
 	public Coin() {
