@@ -52,7 +52,7 @@ public class Player extends GenericObject {
 	public void draw(Graphics g) {
 		// g.drawRect(getX(), getY(), getWidth(), getHeight());
 		g.drawImage(image, getX(), getY(), getWidth(), getHeight(), null);
-		g.drawString("Score: " + score, 30, 650);
+		g.drawString("Score: " + score, game.off_x + 30, 650);
 
 	}
 

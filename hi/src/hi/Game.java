@@ -15,15 +15,18 @@ public class Game extends JPanel implements ActionListener {
 
 	// Declaring everything
 	Player player = new Player(this); // creating player object to this game
-	List<Platform> platforms = new ArrayList<Platform>(); // dynamic data structure
+	List<Platform> platforms = new ArrayList<Platform>(); // dynamic data
+															// structure
 	List<Coin> coins = new ArrayList<Coin>(); // dynamic data structure
 	Timer timer = new Timer(1000 / 60, this); // game timer
-	Timer platTimer = new Timer(1000 / 3, this); // timer to spawn platforms
+	Timer platTimer = new Timer(1000 / 60, this); // timer to spawn platforms
 	int platNumber = 1;
 
+	public int off_x = 0, off_y = 0;
+
 	/**
-	 * initializing method starts timers 
-	 * creates the first coin and first platform location
+	 * initializing method starts timers creates the first coin and first
+	 * platform location
 	 * 
 	 */
 	public void init() {
@@ -59,13 +62,25 @@ public class Game extends JPanel implements ActionListener {
 
 		g.clearRect(0, 0, getWidth(), getHeight());
 
+		off_x += player.vx;
+		if (player.getLocation().x <= 0) {
+			off_x = (getWidth() / 2) - 50;
+		}
+		g.translate((getWidth() / 2) - off_x, 10);
+		player.update();
+
 		player.draw(g);
 
-		for (int i = 0; i < coins.size(); i++) { // loops through all the coins in array list
+		for (int i = 0; i < coins.size(); i++) { // loops through all the coins
+													// in array list
+			coins.get(i).getLocation().x -= off_x;
 			coins.get(i).draw(g);
 		}
 
-		for (int i = 0; i < platforms.size(); i++) { // loops through all platforms in array list
+		for (int i = 0; i < platforms.size(); i++) { // loops through all
+														// platforms in array
+														// list
+			platforms.get(i).getLocation().x -= off_x;
 			platforms.get(i).draw(g);
 		}
 
@@ -85,7 +100,9 @@ public class Game extends JPanel implements ActionListener {
 
 		game.setSize(frame.getSize());
 		game.setFocusable(true);
-		game.setDoubleBuffered(true); // stop the platforms from flickering, setting property of double buffering to true
+		game.setDoubleBuffered(true); // stop the platforms from flickering,
+										// setting property of double buffering
+										// to true
 
 		frame.setTitle("IAN CONYERS THE GAME");
 		frame.setResizable(false);
@@ -103,8 +120,6 @@ public class Game extends JPanel implements ActionListener {
 
 		if (e.getSource() == timer) {
 			repaint();
-			player.update();
-			
 		}
 
 		// creating new platforms
