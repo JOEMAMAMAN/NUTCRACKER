@@ -64,7 +64,7 @@ public class Game extends JPanel implements ActionListener {
 
 		off_x += player.vx;
 		if (player.getLocation().x <= 0) {
-			off_x = (getWidth() / 2) - 50;
+			off_x = (getWidth() / 2) - 250;
 		}
 		g.translate((getWidth() / 2) - off_x, 10);
 		player.update();
