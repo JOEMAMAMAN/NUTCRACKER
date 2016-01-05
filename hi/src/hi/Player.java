@@ -19,6 +19,7 @@ public class Player extends GenericObject {
 	public int vy = 0; 				 // how far character jumps
 	public int landed = this.getY(); // setting character to land on top of platform
 	public BufferedImage image;
+	public boolean alive = true;
 
 	public boolean jump = true; // stops player from constantly jumping
 
@@ -64,6 +65,10 @@ public class Player extends GenericObject {
 		this.setLocation(getX() + vx, getY() + vy);
 
 		vy += 2; // player falling if not landed
+		
+		if (this.getY() > 700) {
+			alive = false;
+		}
 		
 		// Collision between platforms, loops through every platform
 		for (int i = 0; i < game.platforms.size(); i++) {

@@ -20,7 +20,10 @@ public class Game extends JPanel implements ActionListener {
 	List<Coin> coins = new ArrayList<Coin>(); // dynamic data structure
 	Timer timer = new Timer(1000 / 60, this); // game timer
 	Timer platTimer = new Timer(1000 / 60, this); // timer to spawn platforms
+	Timer timeTimer = new Timer(1000, this);
 	int platNumber = 1;
+	
+	int timeRemaining = 60;
 
 	public int off_x = 0, off_y = 0;
 
@@ -33,6 +36,7 @@ public class Game extends JPanel implements ActionListener {
 
 		timer.start();
 		platTimer.start();
+		timeTimer.start();
 
 		// Create first platform in spawning location
 		Platform startPlat = new Platform();
@@ -63,13 +67,16 @@ public class Game extends JPanel implements ActionListener {
 		g.clearRect(0, 0, getWidth(), getHeight());
 
 		off_x += player.vx;
+		
 		if (player.getLocation().x <= 0) {
 			off_x = (getWidth() / 2) - 250;
 		}
 		g.translate((getWidth() / 2) - off_x, 10);
-		player.update();
+		
 
 		player.draw(g);
+		
+		g.drawString("Time remaining: " + timeRemaining, off_x + 450, 650);
 
 		for (int i = 0; i < coins.size(); i++) { // loops through all the coins
 													// in array list
@@ -120,6 +127,17 @@ public class Game extends JPanel implements ActionListener {
 
 		if (e.getSource() == timer) {
 			repaint();
+			player.update();
+			if (player.alive == false) {
+				timer = null;
+			}
+		}
+		
+		if (e.getSource() == timeTimer) {
+			timeRemaining--;
+			if (timeRemaining < 0) {
+				player.alive = false;
+			}
 		}
 
 		// creating new platforms
