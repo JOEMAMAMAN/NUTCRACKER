@@ -1,12 +1,14 @@
 package hi;
 
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -26,6 +28,9 @@ public class Game extends JPanel implements ActionListener {
 	int timeRemaining = 60;
 
 	public int off_x = 0, off_y = 0;
+	
+	GameOver endScreen;
+
 
 	/**
 	 * initializing method starts timers creates the first coin and first
@@ -37,6 +42,8 @@ public class Game extends JPanel implements ActionListener {
 		timer.start();
 		platTimer.start();
 		timeTimer.start();
+		
+		
 
 		// Create first platform in spawning location
 		Platform startPlat = new Platform();
@@ -71,8 +78,10 @@ public class Game extends JPanel implements ActionListener {
 		if (player.getLocation().x <= 0) {
 			off_x = (getWidth() / 2) - 250;
 		}
-		g.translate((getWidth() / 2) - off_x, 10);
 		
+		if (player.alive) {
+			g.translate((getWidth() / 2) - off_x, 10);
+		}
 
 		player.draw(g);
 		
@@ -90,6 +99,10 @@ public class Game extends JPanel implements ActionListener {
 			platforms.get(i).getLocation().x -= off_x;
 			platforms.get(i).draw(g);
 		}
+		
+		if (!player.alive) {
+			GameOver.draw(g);
+		}
 
 	}
 
@@ -102,9 +115,9 @@ public class Game extends JPanel implements ActionListener {
 
 		Game game = new Game();
 		game.init();
+
 		JFrame frame = new JFrame();
 		frame.setSize(1200, 700);
-
 		game.setSize(frame.getSize());
 		game.setFocusable(true);
 		game.setDoubleBuffered(true); // stop the platforms from flickering,
@@ -116,20 +129,28 @@ public class Game extends JPanel implements ActionListener {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addKeyListener(new Input(game));
+		frame.setLayout(null);
+		
 		frame.add(game);
-	}
 
+	}
+	
+
+	
+	
 	@Override
 	/**
 	 * game timer and timer to spawn platforms
 	 */
 	public void actionPerformed(ActionEvent e) {
 
+		
 		if (e.getSource() == timer) {
 			repaint();
 			player.update();
 			if (player.alive == false) {
 				timer = null;
+				endScreen = new GameOver();
 			}
 		}
 		
@@ -156,4 +177,5 @@ public class Game extends JPanel implements ActionListener {
 		}
 
 	}
+	
 }

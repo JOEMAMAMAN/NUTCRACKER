@@ -95,7 +95,13 @@ public class Player extends GenericObject {
 						Coin.spawnCoinY());
 
 			}
+			if (this.getX() - game.coins.get(i).getX() > 1000) {
+				game.coins.remove(i);
+				game.coins.add(new Coin());
+				game.coins.get(i).setLocation(this.getX() + 250, Coin.spawnCoinY());
+			}
 		}
+		
 
 	}
 	/*
