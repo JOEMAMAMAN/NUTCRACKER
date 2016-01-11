@@ -74,7 +74,7 @@ public class Player extends GenericObject {
 		for (int i = 0; i < game.platforms.size(); i++) {
 			Platform platform = game.platforms.get(i);
 			if (this.collision(game.platforms.get(i))) { 	// collision method for each platform in the array
-				landed = (platform.getY()); 	// if landed, set player y value to be above platform
+				
 				vy = 0; // stops character from falling
 				if (this.getY() + this.getHeight() > platform.getY()) {
 					jump = true; // lets you re-jump

@@ -16,18 +16,20 @@ import javax.swing.Timer;
 public class Game extends JPanel implements ActionListener {
 
 	// Declaring everything
+	public int off_x = 0; 
+	public int off_y = 0;
+	
 	Player player = new Player(this); // creating player object to this game
-	List<Platform> platforms = new ArrayList<Platform>(); // dynamic data
-															// structure
+	List<Platform> platforms = new ArrayList<Platform>(); // dynamic data structure
 	List<Coin> coins = new ArrayList<Coin>(); // dynamic data structure
+
 	Timer timer = new Timer(1000 / 60, this); // game timer
 	Timer platTimer = new Timer(1000 / 60, this); // timer to spawn platforms
 	Timer timeTimer = new Timer(1000, this);
+	
 	int platNumber = 1;
 	
 	int timeRemaining = 60;
-
-	public int off_x = 0, off_y = 0;
 	
 	GameOver endScreen;
 
@@ -42,8 +44,6 @@ public class Game extends JPanel implements ActionListener {
 		timer.start();
 		platTimer.start();
 		timeTimer.start();
-		
-		
 
 		// Create first platform in spawning location
 		Platform startPlat = new Platform();
@@ -114,6 +114,7 @@ public class Game extends JPanel implements ActionListener {
 	public static void main(String[] args) {
 
 		Game game = new Game();
+		game.setFocusable(true);
 		game.init();
 
 		JFrame frame = new JFrame();
