@@ -146,20 +146,24 @@ public	Timer timer; // game timer
 
 	
 	public void storeScore(int score) {
-		for (int i = 0; i < highScore.length; i++) {
-			if (score > highScore[i]) {
-				highScore[i] = score;
-				break;
-			}
+		if (score > highScore[4]) {
+			highScore[4] = score;
 		}
 		printScore();
 	}
 	
 	public void printScore() {
+		sortScore();
 		for (int i = 0; i < highScore.length; i++) {
 			System.out.println(highScore[i]);
 		}
 		System.out.println("------------");
+	}
+	
+	public void sortScore() {
+		for (int i = 0; i < highScore.length-1; i++) {
+			
+		}
 	}
 	
 	@Override
