@@ -161,9 +161,17 @@ public	Timer timer; // game timer
 	}
 	
 	public void sortScore() {
+		do {
 		for (int i = 0; i < highScore.length-1; i++) {
-			
+			if (highScore[i] < highScore[i+1]) {
+				int temp = highScore[i];
+				highScore[i] = highScore[i+1];
+				highScore[i+1] = temp;
+			}
 		}
+		} while (highScore[0] > highScore[1]);
+		
+
 	}
 	
 	@Override
