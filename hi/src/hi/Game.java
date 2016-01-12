@@ -23,13 +23,15 @@ public class Game extends JPanel implements ActionListener {
 	List<Platform> platforms = new ArrayList<Platform>(); // dynamic data structure
 	List<Coin> coins = new ArrayList<Coin>(); // dynamic data structure
 
-	Timer timer = new Timer(1000 / 60, this); // game timer
-	Timer platTimer = new Timer(1000 / 60, this); // timer to spawn platforms
-	Timer timeTimer = new Timer(1000, this);
+public	Timer timer; // game timer
+	public Timer platTimer; // timer to spawn platforms
+	public Timer timeTimer;
 	
 	int platNumber = 1;
 	
 	int timeRemaining = 60;
+	
+	public static int[] highScore = {0, 0, 0, 0, 0};
 	
 	GameOver endScreen;
 
@@ -40,7 +42,12 @@ public class Game extends JPanel implements ActionListener {
 	 * 
 	 */
 	public void init() {
-
+		player = new Player(this);
+		
+		timer = new Timer(1000 / 60, this); // game timer
+		platTimer = new Timer(1000 / 60, this); // timer to spawn platforms
+		timeTimer = new Timer(1000, this);
+		
 		timer.start();
 		platTimer.start();
 		timeTimer.start();
@@ -138,6 +145,22 @@ public class Game extends JPanel implements ActionListener {
 	
 
 	
+	public void storeScore(int score) {
+		for (int i = 0; i < highScore.length; i++) {
+			if (score > highScore[i]) {
+				highScore[i] = score;
+				break;
+			}
+		}
+		printScore();
+	}
+	
+	public void printScore() {
+		for (int i = 0; i < highScore.length; i++) {
+			System.out.println(highScore[i]);
+		}
+		System.out.println("------------");
+	}
 	
 	@Override
 	/**
@@ -150,8 +173,10 @@ public class Game extends JPanel implements ActionListener {
 			repaint();
 			player.update();
 			if (player.alive == false) {
-				timer = null;
-				endScreen = new GameOver();
+				storeScore(player.score);
+				init();
+				// timer = null;
+				// endScreen = new GameOver();
 			}
 		}
 		
